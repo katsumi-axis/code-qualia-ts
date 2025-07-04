@@ -247,6 +247,11 @@ npx code-qualia-ts generate --format json > analysis.json
 npx code-qualia-ts generate --format csv > analysis.csv
 ```
 
+## 🌟 Inspiration
+
+This project draws its philosophical foundation from [euglena1215/code-qualia](https://github.com/euglena1215/code-qualia), which pioneered the concept of quantifying developer intuition about code quality. We've adapted and expanded these ideas for the TypeScript ecosystem while maintaining the core principle: bridging the gap between human code perception and AI understanding.
+
+
 ## 🤝 Contributing
 
 1. Fork the repository
