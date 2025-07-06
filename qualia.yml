@@ -1,0 +1,24 @@
+quality_weights:
+  test_coverage: 1.5
+  cyclomatic_complexity: 1
+importance_weights:
+  change_frequency: 0.8
+  architectural_importance: 1.2
+architectural_weights:
+  - path: src/models/**/*.ts
+    weight: 2
+  - path: src/services/**/*.ts
+    weight: 1.8
+  - path: src/controllers/**/*.ts
+    weight: 1.5
+  - path: src/components/**/*.tsx
+    weight: 1.3
+  - path: src/utils/**/*.ts
+    weight: 1
+exclude:
+  - "**/*.test.ts"
+  - "**/*.spec.ts"
+  - node_modules/**/*
+  - dist/**/*
+  - coverage/**/*
+git_history_days: 90

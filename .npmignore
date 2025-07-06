@@ -1,0 +1,15 @@
+src/
+*.ts
+!*.d.ts
+tsconfig.json
+jest.config.js
+.eslintrc.js
+coverage/
+.nyc_output/
+*.test.js
+*.spec.js
+.git/
+.gitignore
+smoke/
+__tests__/
+qualia.yml
