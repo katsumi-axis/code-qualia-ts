@@ -7,7 +7,7 @@ export class CoverageParser {
     const coveragePath = this.findCoverageFile();
     
     if (!coveragePath) {
-      console.warn('No coverage data found. Run tests with coverage first.');
+      console.warn('No coverage data found. Run tests with coverage first (Jest: npm test -- --coverage, Vitest: vitest run --coverage).');
       return {};
     }
 
@@ -22,9 +22,15 @@ export class CoverageParser {
 
   private findCoverageFile(): string | null {
     const possiblePaths = [
+      // Jest, Vitest (c8/istanbul)
       'coverage/coverage-final.json',
       'coverage/lcov-report/coverage-final.json',
+      // NYC
       '.nyc_output/coverage-final.json',
+      // Vitest specific paths
+      'coverage/tmp/coverage-final.json',
+      '.vitest-coverage/coverage-final.json',
+      // Generic fallback
       'coverage/coverage.json',
     ];
 

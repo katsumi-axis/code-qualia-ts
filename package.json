@@ -1,7 +1,7 @@
 {
   "name": "code-qualia-ts",
   "version": "1.0.0",
-  "description": "A tool for communicating developer intuition and code quality perception to AI through configurable parameters",
+  "description": "A tool for communicating developer intuition and code quality perception to AI through configurable parameters. Supports Jest, Vitest, NYC, and C8 coverage.",
   "main": "dist/index.js",
   "bin": {
     "code-qualia-ts": "./dist/cli.js"
@@ -21,7 +21,11 @@
     "developer-tools",
     "typescript",
     "ai-tools",
-    "code-analysis"
+    "code-analysis",
+    "jest",
+    "vitest",
+    "coverage",
+    "testing"
   ],
   "author": "",
   "license": "MIT",

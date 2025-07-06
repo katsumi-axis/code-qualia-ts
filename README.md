@@ -38,6 +38,20 @@ npx code-qualia-ts install
 
 This command automatically detects whether you're working with a Node.js application, React/Vue/Angular project, or a TypeScript library and generates an appropriate configuration file.
 
+### Generate Test Coverage
+
+Before running the analysis, ensure you have test coverage data:
+
+```bash
+# For Jest
+npm test -- --coverage
+
+# For Vitest
+vitest run --coverage
+# or if using npm scripts
+npm run test:coverage
+```
+
 ### Basic Analysis
 
 ```bash
@@ -125,10 +139,12 @@ git_history_days: 90
 
 ## 🔧 Requirements
 
-- **Jest/NYC/C8**: For test coverage data
+- **Jest/Vitest/NYC/C8**: For test coverage data
 - **ESLint with complexity rules**: For code complexity analysis  
 - **Git**: For file change history
 - **TypeScript**: Version 4.0 or higher
+
+> 📝 For Vitest setup instructions, see [docs/VITEST_SETUP.md](docs/VITEST_SETUP.md)
 
 
 ## 🏗️ How It Works
