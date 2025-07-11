@@ -5,7 +5,7 @@ import { InstallCommand } from './commands/install';
 import { GenerateCommand } from './commands/generate';
 import { OutputFormat } from './types';
 
-const version = '1.0.0';
+const version = '1.1.0';
 
 program
   .name('code-qualia-ts')

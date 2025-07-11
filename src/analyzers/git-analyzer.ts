@@ -31,8 +31,8 @@ export class GitAnalyzer {
           }
         }
       }
-    } catch (error) {
-      console.warn(`Git analysis failed: ${error}. Continuing without git data.`);
+    } catch {
+      console.warn('Git analysis failed. Continuing without git data.');
     }
 
     return commitCounts;
@@ -52,7 +52,7 @@ export class GitAnalyzer {
       ]);
 
       return log.total;
-    } catch (error) {
+    } catch {
       return 0;
     }
   }

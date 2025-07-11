@@ -64,7 +64,7 @@ export class InstallCommand {
       }
 
       return null;
-    } catch (error) {
+    } catch {
       console.warn('Failed to parse package.json');
       return null;
     }
