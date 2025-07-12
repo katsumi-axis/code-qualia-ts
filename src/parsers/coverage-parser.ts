@@ -1,13 +1,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { CoverageData } from '../types';
+import type { CoverageData } from '../types';
 
 export class CoverageParser {
   async parseCoverage(): Promise<CoverageData> {
     const coveragePath = this.findCoverageFile();
-    
+
     if (!coveragePath) {
-      console.warn('No coverage data found. Run tests with coverage first (Jest: npm test -- --coverage, Vitest: vitest run --coverage).');
+      console.warn(
+        'No coverage data found. Run tests with coverage first (Jest: npm test -- --coverage, Vitest: vitest run --coverage).'
+      );
       return {};
     }
 
@@ -52,7 +54,7 @@ export class CoverageParser {
     for (const [filePath, fileData] of Object.entries(rawCoverage)) {
       if (typeof fileData === 'object' && fileData !== null) {
         const data = fileData as any;
-        
+
         if (data.statementMap && data.s) {
           normalized[filePath] = {
             lines: {},
@@ -63,7 +65,7 @@ export class CoverageParser {
               const stmt = stmtInfo as any;
               const line = stmt.start?.line;
               const hitCount = data.s[stmtId] || 0;
-              
+
               if (line) {
                 normalized[filePath].lines[line] = hitCount;
               }
@@ -76,7 +78,12 @@ export class CoverageParser {
     return normalized;
   }
 
-  getLineCoverage(coverageData: CoverageData, filePath: string, startLine: number, endLine: number): number {
+  getLineCoverage(
+    coverageData: CoverageData,
+    filePath: string,
+    startLine: number,
+    endLine: number
+  ): number {
     const fileData = coverageData[filePath];
     if (!fileData) {
       return 0;
@@ -94,6 +101,6 @@ export class CoverageParser {
       }
     }
 
-    return totalLines > 0 ? (coveredLines / totalLines) : 0;
+    return totalLines > 0 ? coveredLines / totalLines : 0;
   }
 }

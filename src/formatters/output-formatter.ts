@@ -1,6 +1,6 @@
 import Table from 'cli-table3';
 import { createObjectCsvStringifier } from 'csv-writer';
-import { MethodScore, OutputFormat } from '../types';
+import type { MethodScore, OutputFormat } from '../types';
 
 export class OutputFormatter {
   format(scores: MethodScore[], format: OutputFormat, topN: number): string {
@@ -42,7 +42,7 @@ export class OutputFormatter {
   }
 
   private formatJson(scores: MethodScore[]): string {
-    const output = scores.map(score => ({
+    const output = scores.map((score) => ({
       file_path: score.file_path,
       class_name: score.class_name,
       method_name: score.method_name,
@@ -71,7 +71,7 @@ export class OutputFormatter {
       ],
     });
 
-    const records = scores.map(score => ({
+    const records = scores.map((score) => ({
       file_path: score.file_path,
       method_name: score.method_name,
       line_number: score.line_number,
@@ -90,7 +90,7 @@ export class OutputFormatter {
       colWidths: [45, 18, 6, 7, 10, 12, 10],
     });
 
-    scores.forEach(score => {
+    scores.forEach((score) => {
       table.push([
         this.truncate(score.file_path, 43),
         this.truncate(score.method_name, 16),
@@ -109,6 +109,6 @@ export class OutputFormatter {
     if (str.length <= maxLength) {
       return str;
     }
-    return '...' + str.slice(-(maxLength - 3));
+    return `...${str.slice(-(maxLength - 3))}`;
   }
 }

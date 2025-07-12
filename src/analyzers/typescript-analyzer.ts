@@ -1,8 +1,7 @@
+import { AST_NODE_TYPES, parse } from '@typescript-eslint/typescript-estree';
 import * as fs from 'fs';
-import { parse } from '@typescript-eslint/typescript-estree';
-import { AST_NODE_TYPES } from '@typescript-eslint/typescript-estree';
-import { MethodInfo } from '../types';
 import { glob } from 'glob';
+import type { MethodInfo } from '../types';
 
 export class TypeScriptAnalyzer {
   async analyzeMethods(exclude: string[]): Promise<MethodInfo[]> {
@@ -51,17 +50,23 @@ export class TypeScriptAnalyzer {
     return methods;
   }
 
-  private traverseAST(node: any, filePath: string, methods: MethodInfo[], className?: string): void {
+  private traverseAST(
+    node: any,
+    filePath: string,
+    methods: MethodInfo[],
+    className?: string
+  ): void {
     if (!node || typeof node !== 'object') {
       return;
     }
 
     switch (node.type) {
       case AST_NODE_TYPES.ClassDeclaration:
-      case AST_NODE_TYPES.ClassExpression:
+      case AST_NODE_TYPES.ClassExpression: {
         const currentClassName = node.id?.name || 'AnonymousClass';
         this.traverseAST(node.body, filePath, methods, currentClassName);
         break;
+      }
 
       case AST_NODE_TYPES.MethodDefinition:
         if (node.key?.type === AST_NODE_TYPES.Identifier) {
@@ -87,8 +92,10 @@ export class TypeScriptAnalyzer {
         break;
 
       case AST_NODE_TYPES.VariableDeclarator:
-        if (node.init?.type === AST_NODE_TYPES.FunctionExpression ||
-            node.init?.type === AST_NODE_TYPES.ArrowFunctionExpression) {
+        if (
+          node.init?.type === AST_NODE_TYPES.FunctionExpression ||
+          node.init?.type === AST_NODE_TYPES.ArrowFunctionExpression
+        ) {
           if (node.id?.type === AST_NODE_TYPES.Identifier) {
             methods.push({
               file_path: filePath,
@@ -101,8 +108,10 @@ export class TypeScriptAnalyzer {
         break;
 
       case AST_NODE_TYPES.Property:
-        if (node.value?.type === AST_NODE_TYPES.FunctionExpression ||
-            node.value?.type === AST_NODE_TYPES.ArrowFunctionExpression) {
+        if (
+          node.value?.type === AST_NODE_TYPES.FunctionExpression ||
+          node.value?.type === AST_NODE_TYPES.ArrowFunctionExpression
+        ) {
           if (node.key?.type === AST_NODE_TYPES.Identifier) {
             methods.push({
               file_path: filePath,

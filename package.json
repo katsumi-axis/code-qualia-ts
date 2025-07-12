@@ -12,7 +12,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:integration": "jest --testPathPattern=integration",
-    "lint": "eslint src --ext .ts",
+    "lint:eslint": "eslint src --ext .ts",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome check .",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
@@ -46,6 +49,7 @@
     "LICENSE"
   ],
   "devDependencies": {
+    "@biomejs/biome": "^2.1.1",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
     "@typescript-eslint/eslint-plugin": "^8.36.0",

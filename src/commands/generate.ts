@@ -1,10 +1,10 @@
-import { ConfigParser } from '../parsers/config-parser';
-import { CoverageParser } from '../parsers/coverage-parser';
-import { TypeScriptAnalyzer } from '../analyzers/typescript-analyzer';
 import { GitAnalyzer } from '../analyzers/git-analyzer';
 import { ScoreCalculator } from '../analyzers/score-calculator';
+import { TypeScriptAnalyzer } from '../analyzers/typescript-analyzer';
 import { OutputFormatter } from '../formatters/output-formatter';
-import { OutputFormat } from '../types';
+import { ConfigParser } from '../parsers/config-parser';
+import { CoverageParser } from '../parsers/coverage-parser';
+import type { OutputFormat } from '../types';
 
 interface GenerateOptions {
   config?: string;
@@ -33,7 +33,7 @@ export class GenerateCommand {
 
       console.error('🔍 Analyzing TypeScript methods...');
       const methods = await this.tsAnalyzer.analyzeMethods(config.exclude);
-      
+
       if (methods.length === 0) {
         console.log('No TypeScript methods found to analyze.');
         return;
@@ -41,11 +41,11 @@ export class GenerateCommand {
 
       console.error('📊 Loading coverage data...');
       const coverageData = await this.coverageParser.parseCoverage();
-      
+
       console.error('📝 Analyzing git history...');
       const isGitRepo = await this.gitAnalyzer.isGitRepository();
       let gitCommitCounts = new Map<string, number>();
-      
+
       if (isGitRepo) {
         gitCommitCounts = await this.gitAnalyzer.getFileCommitCounts(config.git_history_days);
       } else {
@@ -58,7 +58,6 @@ export class GenerateCommand {
 
       const output = this.outputFormatter.format(scores, options.format, options.topN);
       console.log(output);
-
     } catch (error) {
       console.error(`Error: ${error}`);
       process.exit(1);

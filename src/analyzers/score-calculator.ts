@@ -1,7 +1,7 @@
-import * as path from 'path';
 import { minimatch } from 'minimatch';
-import { Config, MethodInfo, MethodScore, CoverageData } from '../types';
-import { CoverageParser } from '../parsers/coverage-parser';
+import * as path from 'path';
+import type { CoverageParser } from '../parsers/coverage-parser';
+import type { Config, CoverageData, MethodInfo, MethodScore } from '../types';
 
 export class ScoreCalculator {
   constructor(
@@ -18,13 +18,13 @@ export class ScoreCalculator {
 
     for (const method of methods) {
       const relativePath = path.relative(process.cwd(), method.file_path);
-      
+
       const coverage = this.getMethodCoverage(method, coverageData);
       const gitCommits = gitCommitCounts.get(relativePath) || 0;
-      
+
       const qualityScore = this.calculateQualityScore(coverage, method.complexity);
       const importanceScore = this.calculateImportanceScore(gitCommits, relativePath);
-      
+
       const finalScore = qualityScore * importanceScore;
 
       scores.push({
@@ -60,19 +60,19 @@ export class ScoreCalculator {
     const coverageFactor = 1.0 - coverage;
     const complexityFactor = complexity;
 
-    const qualityScore = 
-      (this.config.quality_weights.test_coverage * coverageFactor) +
-      (this.config.quality_weights.cyclomatic_complexity * complexityFactor);
+    const qualityScore =
+      this.config.quality_weights.test_coverage * coverageFactor +
+      this.config.quality_weights.cyclomatic_complexity * complexityFactor;
 
     return Math.max(0, qualityScore);
   }
 
   private calculateImportanceScore(gitCommits: number, filePath: string): number {
     const architecturalWeight = this.getArchitecturalWeight(filePath);
-    
-    const importanceScore = 
-      (this.config.importance_weights.change_frequency * gitCommits) +
-      (this.config.importance_weights.architectural_importance * architecturalWeight);
+
+    const importanceScore =
+      this.config.importance_weights.change_frequency * gitCommits +
+      this.config.importance_weights.architectural_importance * architecturalWeight;
 
     return Math.max(1, importanceScore);
   }

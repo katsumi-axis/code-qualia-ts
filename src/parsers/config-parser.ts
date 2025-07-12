@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import * as yaml from 'yaml';
 import * as path from 'path';
-import { Config } from '../types';
+import * as yaml from 'yaml';
+import type { Config } from '../types';
 
 export class ConfigParser {
   private readonly defaultConfig: Config = {
@@ -20,19 +20,13 @@ export class ConfigParser {
       { path: 'src/components/**/*.tsx', weight: 1.3 },
       { path: 'src/utils/**/*.ts', weight: 1.0 },
     ],
-    exclude: [
-      '**/*.test.ts',
-      '**/*.spec.ts',
-      'node_modules/**/*',
-      'dist/**/*',
-      'coverage/**/*',
-    ],
+    exclude: ['**/*.test.ts', '**/*.spec.ts', 'node_modules/**/*', 'dist/**/*', 'coverage/**/*'],
     git_history_days: 90,
   };
 
   async loadConfig(configPath?: string): Promise<Config> {
     const actualConfigPath = configPath || this.findConfigFile();
-    
+
     if (!actualConfigPath || !fs.existsSync(actualConfigPath)) {
       console.warn('No configuration file found, using defaults');
       return this.defaultConfig;
@@ -41,7 +35,7 @@ export class ConfigParser {
     try {
       const configContent = fs.readFileSync(actualConfigPath, 'utf8');
       const parsedConfig = yaml.parse(configContent) as Partial<Config>;
-      
+
       return this.mergeWithDefaults(parsedConfig);
     } catch (error) {
       console.error(`Error parsing config file: ${error}`);
@@ -73,7 +67,8 @@ export class ConfigParser {
         ...this.defaultConfig.importance_weights,
         ...(partial.importance_weights || {}),
       },
-      architectural_weights: partial.architectural_weights || this.defaultConfig.architectural_weights,
+      architectural_weights:
+        partial.architectural_weights || this.defaultConfig.architectural_weights,
       exclude: partial.exclude || this.defaultConfig.exclude,
       git_history_days: partial.git_history_days || this.defaultConfig.git_history_days,
     };

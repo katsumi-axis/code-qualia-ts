@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { program } from 'commander';
-import { InstallCommand } from './commands/install';
 import { GenerateCommand } from './commands/generate';
-import { OutputFormat } from './types';
+import { InstallCommand } from './commands/install';
+import type { OutputFormat } from './types';
 
 const version = '1.1.0';
 

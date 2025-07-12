@@ -11,7 +11,7 @@ export class InstallCommand {
 
   async execute(): Promise<void> {
     console.log('🔍 Analyzing project structure...');
-    
+
     const projectType = this.detectProjectType();
     console.log(`📦 Detected project type: ${projectType || 'generic TypeScript'}`);
 
@@ -35,7 +35,7 @@ export class InstallCommand {
 
   private detectProjectType(): string | null {
     const packageJsonPath = path.join(process.cwd(), 'package.json');
-    
+
     if (!fs.existsSync(packageJsonPath)) {
       return null;
     }
@@ -50,15 +50,15 @@ export class InstallCommand {
       if (dependencies.react || dependencies['react-dom']) {
         return 'react';
       }
-      
+
       if (dependencies.vue) {
         return 'vue';
       }
-      
+
       if (dependencies['@angular/core']) {
         return 'angular';
       }
-      
+
       if (dependencies.express || dependencies.koa || dependencies.fastify) {
         return 'node';
       }
