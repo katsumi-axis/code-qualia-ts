@@ -12,7 +12,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:integration": "jest --testPathPattern=integration",
-    "lint:eslint": "eslint src --ext .ts",
+    "lint:eslint": "eslint src --ext .ts,.tsx",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "format:check": "biome check .",

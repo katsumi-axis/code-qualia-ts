@@ -40,6 +40,7 @@ export class TypeScriptAnalyzer {
         loc: true,
         range: true,
         comment: false,
+        jsx: true,
       });
 
       this.traverseAST(ast, filePath, methods);
